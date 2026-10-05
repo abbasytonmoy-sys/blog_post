@@ -6,32 +6,30 @@ import { usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { ChevronDown, ChevronRight, BookOpen } from "lucide-react";
 
-// Mock data as fallback if DB is empty
+// Mock data to demonstrate multiple subjects (Dynamic logic will be added later)
 const mockSubjects = [
   {
-    id: "sub-1",
-    name: "বাংলাদেশের ইতিহাস",
+    id: "sub-bd",
+    name: "বাংলাদেশ বিষয়াবলী",
     chapters: [
-      { id: "chap-1", title: "প্রাচীন কাল", slug: "ancient-history" },
-      { id: "chap-2", title: "মধ্যযুগ", slug: "middle-age" },
-      { id: "chap-3", title: "ব্রিটিশ আমল", slug: "british-period" },
+      { id: "chap-bd-1", title: "প্রাচীন কালের ইতিহাস", slug: "bd-ancient-history" },
+      { id: "chap-bd-2", title: "মুক্তিযুদ্ধ ও স্বাধীনতা", slug: "bd-liberation-war" },
     ]
   },
   {
-    id: "sub-2",
-    name: "মুক্তিযুদ্ধ ও স্বাধীনতা",
+    id: "sub-intl",
+    name: "আন্তর্জাতিক বিষয়াবলী",
     chapters: [
-      { id: "chap-4", title: "ভাষা আন্দোলন", slug: "language-movement" },
-      { id: "chap-5", title: "৬ দফা ও গণঅভ্যুত্থান", slug: "six-point" },
-      { id: "chap-6", title: "১৯৭১ এর মুক্তিযুদ্ধ", slug: "liberation-war-1971" },
+      { id: "chap-intl-1", title: "জাতিসংঘ ও বিশ্ব সংগঠন", slug: "un-and-organizations" },
+      { id: "chap-intl-2", title: "বৈশ্বিক ইতিহাস", slug: "global-history" },
     ]
   },
   {
-    id: "sub-3",
-    name: "ভৌগোলিক অবস্থান",
+    id: "sub-geo",
+    name: "ভূগোল ও পরিবেশ",
     chapters: [
-      { id: "chap-7", title: "সীমানা ও আয়তন", slug: "border-area" },
-      { id: "chap-8", title: "নদ-নদী", slug: "rivers" },
+      { id: "chap-geo-1", title: "সৌরজগৎ", slug: "solar-system" },
+      { id: "chap-geo-2", title: "জলবায়ু পরিবর্তন", slug: "climate-change" },
     ]
   }
 ];
@@ -39,17 +37,7 @@ const mockSubjects = [
 export default function Sidebar() {
   const pathname = usePathname();
   const [subjects, setSubjects] = useState(mockSubjects);
-  const [expandedSubject, setExpandedSubject] = useState<string | null>("sub-1");
-
-  // In the future, we can fetch real data from Supabase here
-  /*
-  useEffect(() => {
-    const fetchTopics = async () => {
-      // Logic to fetch from your supabase tables
-    };
-    fetchTopics();
-  }, []);
-  */
+  const [expandedSubject, setExpandedSubject] = useState<string | null>("sub-bd");
 
   const toggleSubject = (id: string) => {
     setExpandedSubject(expandedSubject === id ? null : id);

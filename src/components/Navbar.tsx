@@ -6,23 +6,23 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="font-bold text-xl tracking-wider">
-              বাংলাদেশ বিষয়াবলী
+            <Link href="/" className="font-bold text-2xl tracking-wider font-bengali">
+              পড়ুন
             </Link>
           </div>
           <div className="hidden md:flex space-x-8 items-center">
-            <Link href="/topics" className="hover:text-emerald-200 transition">
+            <Link href="/topics" className="hover:text-emerald-200 transition font-bengali">
               অধ্যায়সমূহ
             </Link>
-            <Link href="/quizzes" className="hover:text-emerald-200 transition">
+            <Link href="/quizzes" className="hover:text-emerald-200 transition font-bengali">
               কুইজ
             </Link>
-            <Link href="/profile" className="hover:text-emerald-200 transition">
+            <Link href="/profile" className="hover:text-emerald-200 transition font-bengali">
               প্রোফাইল
             </Link>
           </div>
           <div className="flex items-center">
-            <Link href="/login" className="bg-emerald-600 hover:bg-emerald-800 text-white px-4 py-2 rounded-md font-medium transition shadow-sm">
+            <Link href="/login" className="bg-emerald-600 hover:bg-emerald-800 text-white px-4 py-2 rounded-md font-medium transition shadow-sm font-bengali">
               লগইন
             </Link>
           </div>

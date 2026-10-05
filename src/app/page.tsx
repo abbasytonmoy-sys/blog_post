@@ -5,17 +5,17 @@ export default function Home() {
     <div className="space-y-12">
       {/* Hero Section */}
       <section className="text-center py-16 bg-white rounded-2xl shadow-sm border border-slate-100">
-        <h1 className="text-4xl font-bold text-emerald-800 mb-4 font-bengali">
-          বাংলাদেশ বিষয়াবলী প্রস্তুতি
+        <h1 className="text-4xl md:text-5xl font-bold text-emerald-800 mb-4 font-bengali">
+          আপনার পড়ার নতুন সঙ্গী
         </h1>
-        <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-8">
-          বিসিএস, ব্যাংক এবং অন্যান্য প্রতিযোগিতামূলক পরীক্ষার জন্য গোছানো আর্টিকেল এবং ইন্টারেক্টিভ কুইজ দিয়ে নিজের প্রস্তুতিকে আরও শাণিত করুন।
+        <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-8 font-bengali">
+          যেকোনো বিষয়ের সাজানো আর্টিকেল পড়ুন এবং ইন্টারেক্টিভ কুইজ দিয়ে নিজের প্রস্তুতিকে আরও শাণিত করুন।
         </p>
         <div className="flex justify-center gap-4">
-          <Link href="/topics" className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium shadow transition">
+          <Link href="/topics" className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium shadow transition font-bengali">
             পড়া শুরু করুন
           </Link>
-          <Link href="/quizzes" className="bg-white hover:bg-slate-50 text-emerald-700 border border-emerald-600 px-6 py-3 rounded-lg font-medium shadow-sm transition">
+          <Link href="/quizzes" className="bg-white hover:bg-slate-50 text-emerald-700 border border-emerald-600 px-6 py-3 rounded-lg font-medium shadow-sm transition font-bengali">
             কুইজ দিন
           </Link>
         </div>
@@ -24,20 +24,20 @@ export default function Home() {
       {/* Featured Topics Preview */}
       <section>
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-slate-800">জনপ্রিয় অধ্যায়সমূহ</h2>
-          <Link href="/topics" className="text-emerald-600 hover:text-emerald-800 font-medium text-sm">
+          <h2 className="text-2xl font-bold text-slate-800 font-bengali">জনপ্রিয় বিষয়সমূহ</h2>
+          <Link href="/topics" className="text-emerald-600 hover:text-emerald-800 font-medium text-sm font-bengali">
             সবগুলো দেখুন &rarr;
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { title: "বাংলাদেশের ভৌগোলিক অবস্থান", count: "১২টি আর্টিকেল", id: "geography" },
-            { title: "বাংলাদেশের মুক্তিযুদ্ধ ও স্বাধীনতা", count: "১৮টি আর্টিকেল", id: "liberation-war" },
-            { title: "সংবিধান ও প্রশাসনিক কাঠামো", count: "১০টি আর্টিকেল", id: "constitution" },
+            { title: "বাংলাদেশ বিষয়াবলী", count: "১২টি অধ্যায়", id: "bangladesh" },
+            { title: "আন্তর্জাতিক বিষয়াবলী", count: "১৮টি অধ্যায়", id: "international" },
+            { title: "ভূগোল ও পরিবেশ", count: "১০টি অধ্যায়", id: "geography" },
           ].map((topic, i) => (
-            <Link key={i} href={`/topics/${topic.id}`} className="group bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-200 transition">
-              <h3 className="text-xl font-semibold text-slate-800 group-hover:text-emerald-700 mb-2">{topic.title}</h3>
-              <p className="text-slate-500 text-sm">{topic.count}</p>
+            <Link key={i} href={`/topics/`} className="group bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-200 transition">
+              <h3 className="text-xl font-semibold text-slate-800 group-hover:text-emerald-700 mb-2 font-bengali">{topic.title}</h3>
+              <p className="text-slate-500 text-sm font-bengali">{topic.count}</p>
             </Link>
           ))}
         </div>
