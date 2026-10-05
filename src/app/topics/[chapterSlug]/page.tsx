@@ -18,7 +18,7 @@ export default async function ChapterPage({
           অধ্যায়
         </span>
         <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mt-4 mb-4 font-bengali leading-tight">
-          {chapterSlug === 'ancient-history' ? 'প্রাচীন কালের ইতিহাস' : 'অধ্যায়ের শিরোনাম'}
+          {chapterSlug === 'bd-ancient-history' ? 'প্রাচীন কালের ইতিহাস' : 'অধ্যায়ের শিরোনাম'}
         </h1>
         <div className="flex items-center gap-4 text-sm text-slate-500 pb-6 border-b border-slate-100">
           <span className="flex items-center gap-1">
@@ -27,14 +27,15 @@ export default async function ChapterPage({
         </div>
       </div>
 
-      <article className="prose prose-emerald lg:prose-lg max-w-none font-bengali text-slate-700 space-y-6">
+      {/* Manual Typography without prose plugin */}
+      <article className="font-bengali text-slate-700 space-y-6 text-lg leading-relaxed">
         <p>
           এখানে অধ্যায়ের বিস্তারিত লেখা থাকবে। আপনি চাইলে প্যারাগ্রাফ, বুলেট পয়েন্ট, এবং হেডিং ব্যবহার করে তথ্যগুলো সুন্দরভাবে সাজিয়ে লিখতে পারবেন। 
         </p>
         
-        <h2 className="text-2xl font-bold text-slate-800 mt-8 mb-4">গুরুত্বপূর্ণ পয়েন্টসমূহ</h2>
+        <h2 className="text-2xl font-bold text-slate-800 mt-10 mb-4">গুরুত্বপূর্ণ পয়েন্টসমূহ</h2>
         <ul className="list-disc pl-6 space-y-2">
-          <li>বিসিএস পরীক্ষার জন্য এই অংশটি খুবই গুরুত্বপূর্ণ।</li>
+          <li>বিসিএস এবং অন্যান্য পরীক্ষার জন্য এই অংশটি খুবই গুরুত্বপূর্ণ।</li>
           <li>এই অধ্যায় থেকে সাধারণত ১-২টি প্রশ্ন এসে থাকে।</li>
           <li>তথ্যগুলো মনে রাখার জন্য বারবার রিভিশন দেওয়া প্রয়োজন।</li>
         </ul>
