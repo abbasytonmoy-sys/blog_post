@@ -1,69 +1,47 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="space-y-12">
+      {/* Hero Section */}
+      <section className="text-center py-16 bg-white rounded-2xl shadow-sm border border-slate-100">
+        <h1 className="text-4xl font-bold text-emerald-800 mb-4 font-bengali">
+          বাংলাদেশ বিষয়াবলী প্রস্তুতি
+        </h1>
+        <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-8">
+          বিসিএস, ব্যাংক এবং অন্যান্য প্রতিযোগিতামূলক পরীক্ষার জন্য গোছানো আর্টিকেল এবং ইন্টারেক্টিভ কুইজ দিয়ে নিজের প্রস্তুতিকে আরও শাণিত করুন।
+        </p>
+        <div className="flex justify-center gap-4">
+          <Link href="/topics" className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium shadow transition">
+            পড়া শুরু করুন
+          </Link>
+          <Link href="/quizzes" className="bg-white hover:bg-slate-50 text-emerald-700 border border-emerald-600 px-6 py-3 rounded-lg font-medium shadow-sm transition">
+            কুইজ দিন
+          </Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Featured Topics Preview */}
+      <section>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-slate-800">জনপ্রিয় অধ্যায়সমূহ</h2>
+          <Link href="/topics" className="text-emerald-600 hover:text-emerald-800 font-medium text-sm">
+            সবগুলো দেখুন &rarr;
+          </Link>
         </div>
-      </main>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { title: "বাংলাদেশের ভৌগোলিক অবস্থান", count: "১২টি আর্টিকেল", id: "geography" },
+            { title: "বাংলাদেশের মুক্তিযুদ্ধ ও স্বাধীনতা", count: "১৮টি আর্টিকেল", id: "liberation-war" },
+            { title: "সংবিধান ও প্রশাসনিক কাঠামো", count: "১০টি আর্টিকেল", id: "constitution" },
+          ].map((topic, i) => (
+            <Link key={i} href={`/topics/${topic.id}`} className="group bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-200 transition">
+              <h3 className="text-xl font-semibold text-slate-800 group-hover:text-emerald-700 mb-2">{topic.title}</h3>
+              <p className="text-slate-500 text-sm">{topic.count}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
