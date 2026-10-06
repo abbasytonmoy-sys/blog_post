@@ -7,42 +7,54 @@ import { supabase } from "@/lib/supabase";
 import { ChevronDown, ChevronRight, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Mock data to demonstrate multiple subjects (Dynamic logic will be added later)
-const mockSubjects = [
-  {
-    id: "sub-bd",
-    name: "বাংলাদেশ বিষয়াবলী",
-    chapters: [
-      { id: "chap-bd-1", title: "প্রাচীন কালের ইতিহাস", slug: "bd-ancient-history" },
-      { id: "chap-bd-2", title: "মুক্তিযুদ্ধ ও স্বাধীনতা", slug: "bd-liberation-war" },
-    ]
-  },
-  {
-    id: "sub-intl",
-    name: "আন্তর্জাতিক বিষয়াবলী",
-    chapters: [
-      { id: "chap-intl-1", title: "জাতিসংঘ ও বিশ্ব সংগঠন", slug: "un-and-organizations" },
-      { id: "chap-intl-2", title: "বৈশ্বিক ইতিহাস", slug: "global-history" },
-    ]
-  },
-  {
-    id: "sub-geo",
-    name: "ভূগোল ও পরিবেশ",
-    chapters: [
-      { id: "chap-geo-1", title: "সৌরজগৎ", slug: "solar-system" },
-      { id: "chap-geo-2", title: "জলবায়ু পরিবর্তন", slug: "climate-change" },
-    ]
-  }
-];
-
 export default function Sidebar() {
   const pathname = usePathname();
-  const [subjects, setSubjects] = useState(mockSubjects);
-  const [expandedSubject, setExpandedSubject] = useState<string | null>("sub-bd");
+  const [subjects, setSubjects] = useState<any[]>([]);
+  const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchSidebarData();
+  }, []);
+
+  const fetchSidebarData = async () => {
+    // Fetch all topics (subjects)
+    const { data: topicsData } = await supabase.from("topics").select("*").order("created_at", { ascending: true });
+    
+    // Fetch all articles (chapters)
+    const { data: articlesData } = await supabase.from("articles").select("id, title, topic_id").order("created_at", { ascending: true });
+
+    if (topicsData && articlesData) {
+      // Map articles into their respective topics
+      const formattedSubjects = topicsData.map((topic) => ({
+        id: topic.id,
+        name: topic.title,
+        chapters: articlesData.filter((article) => article.topic_id === topic.id)
+      }));
+
+      setSubjects(formattedSubjects);
+      
+      // Auto-expand the first subject if none selected
+      if (formattedSubjects.length > 0) {
+        setExpandedSubject(formattedSubjects[0].id);
+      }
+    }
+    setLoading(false);
+  };
 
   const toggleSubject = (id: string) => {
     setExpandedSubject(expandedSubject === id ? null : id);
   };
+
+  if (loading) {
+    return (
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center sticky top-24">
+        <div className="animate-pulse flex space-x-4 justify-center">
+          <div className="h-4 bg-slate-200 rounded w-3/4"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24">
@@ -79,27 +91,36 @@ export default function Sidebar() {
                   transition={{ duration: 0.2 }}
                   className="bg-white p-2 space-y-1 overflow-hidden"
                 >
-                  {subject.chapters.map((chapter) => {
-                    const isActive = pathname === `/topics/${chapter.slug}`;
-                    return (
-                      <Link
-                        key={chapter.id}
-                        href={`/topics/${chapter.slug}`}
-                        className={`block px-4 py-2 rounded-md text-sm transition font-bengali ${
-                          isActive 
-                            ? "bg-emerald-100 text-emerald-800 font-semibold" 
-                            : "text-slate-600 hover:bg-slate-50 hover:text-emerald-600"
-                        }`}
-                      >
-                        {chapter.title}
-                      </Link>
-                    );
-                  })}
+                  {subject.chapters.length === 0 ? (
+                    <div className="text-slate-400 text-sm px-4 py-2 font-bengali">কোনো কন্টেন্ট নেই</div>
+                  ) : (
+                    subject.chapters.map((chapter: any) => {
+                      const isActive = pathname === `/topics/${chapter.id}`;
+                      return (
+                        <Link
+                          key={chapter.id}
+                          href={`/topics/${chapter.id}`}
+                          className={`block px-4 py-2 rounded-md text-sm transition font-bengali ${
+                            isActive 
+                              ? "bg-emerald-100 text-emerald-800 font-semibold" 
+                              : "text-slate-600 hover:bg-slate-50 hover:text-emerald-600"
+                          }`}
+                        >
+                          {chapter.title}
+                        </Link>
+                      );
+                    })
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
         ))}
+        {subjects.length === 0 && (
+          <div className="text-center text-slate-500 py-4 font-bengali">
+            কোনো বিষয় যোগ করা হয়নি।
+          </div>
+        )}
       </div>
     </div>
   );

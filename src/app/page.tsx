@@ -1,18 +1,15 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { supabase } from "@/lib/supabase";
 
-export default function Home() {
+// Need to make Home async to fetch data
+export default async function Home() {
+  // Fetch up to 6 topics
+  const { data: topics } = await supabase.from("topics").select("id, title, slug").limit(6);
+
   return (
     <div className="space-y-12">
       {/* Hero Section */}
-      <motion.section 
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center py-16 bg-white rounded-2xl shadow-sm border border-slate-100"
-      >
+      <section className="text-center py-16 bg-white rounded-2xl shadow-sm border border-slate-100">
         <h1 className="text-4xl md:text-5xl font-bold text-emerald-800 mb-4 font-bengali">
           আপনার পড়ার নতুন সঙ্গী
         </h1>
@@ -27,7 +24,7 @@ export default function Home() {
             কুইজ দিন
           </Link>
         </div>
-      </motion.section>
+      </section>
 
       {/* Featured Topics Preview */}
       <section>
@@ -38,23 +35,19 @@ export default function Home() {
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { title: "বাংলাদেশ বিষয়াবলী", count: "১২টি অধ্যায়", id: "bangladesh" },
-            { title: "আন্তর্জাতিক বিষয়াবলী", count: "১৮টি অধ্যায়", id: "international" },
-            { title: "ভূগোল ও পরিবেশ", count: "১০টি অধ্যায়", id: "geography" },
-          ].map((topic, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-            >
-              <Link href={`/topics/`} className="group block bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-200 transition h-full">
+          {topics?.map((topic) => (
+            <div key={topic.id}>
+              <Link href={`/topics/`} className="block bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-200 transition h-full group">
                 <h3 className="text-xl font-semibold text-slate-800 group-hover:text-emerald-700 mb-2 font-bengali">{topic.title}</h3>
-                <p className="text-slate-500 text-sm font-bengali">{topic.count}</p>
+                <p className="text-slate-500 text-sm font-bengali">ক্লিক করে পড়ুন</p>
               </Link>
-            </motion.div>
+            </div>
           ))}
+          {(!topics || topics.length === 0) && (
+            <div className="col-span-3 text-center text-slate-500 font-bengali py-8">
+              এখনো কোনো বিষয় যুক্ত করা হয়নি।
+            </div>
+          )}
         </div>
       </section>
     </div>
