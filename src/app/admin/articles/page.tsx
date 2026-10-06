@@ -2,6 +2,26 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
+
+// Dynamically import ReactQuill to avoid SSR issues with the document object
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+const modules = {
+  toolbar: [
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+    ['blockquote', 'code-block'],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+    [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+    [{ 'align': [] }],
+    ['link', 'image', 'video'],
+    ['clean']                                         // remove formatting button
+  ],
+};
 
 export default function AdminArticles() {
   const [topics, setTopics] = useState<any[]>([]);
@@ -87,21 +107,22 @@ export default function AdminArticles() {
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">বিস্তারিত কন্টেন্ট (HTML বা Text)</label>
-            <textarea
-              required
-              rows={8}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-emerald-500 outline-none"
-              placeholder="এখানে বিস্তারিত লেখা যুক্ত করুন... (আপনি চাইলে <p>, <h2>, <ul> ট্যাগ ব্যবহার করতে পারেন)"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-            />
+          <div className="mb-8">
+            <label className="block text-sm font-medium text-slate-700 mb-1">বিস্তারিত কন্টেন্ট (গুগল ডক্সের মতো লিখুন)</label>
+            <div className="bg-white rounded-lg overflow-hidden border border-slate-300">
+              <ReactQuill 
+                theme="snow" 
+                value={content} 
+                onChange={setContent} 
+                modules={modules}
+                className="h-64 mb-12"
+              />
+            </div>
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium transition"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium transition mt-4"
           >
             {loading ? "যোগ হচ্ছে..." : "কন্টেন্ট সেভ করুন"}
           </button>

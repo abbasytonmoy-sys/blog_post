@@ -9,33 +9,49 @@ import { LayoutDashboard, FileText, PlusCircle, HelpCircle } from "lucide-react"
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [debugMsg, setDebugMsg] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     const checkAdmin = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        router.push("/login");
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError || !session) {
+        setDebugMsg("No session found. Redirecting to login...");
+        setTimeout(() => router.push("/login"), 2000);
         return;
       }
 
       // Check user role from profiles
-      const { data: profile } = await supabase
+      const { data: profile, error: profileError } = await supabase
         .from("profiles")
-        .select("role")
+        .select("*")
         .eq("id", session.user.id)
         .single();
 
+      if (profileError) {
+        setDebugMsg(`Profile fetch error: ${profileError.message} (ID: ${session.user.id})`);
+        return;
+      }
+
       if (profile?.role === "admin") {
         setIsAdmin(true);
+        setLoading(false);
       } else {
-        router.push("/");
+        setDebugMsg(`User is not admin. Role is: ${profile?.role}. Redirecting to home...`);
+        setTimeout(() => router.push("/"), 3000);
       }
-      setLoading(false);
     };
 
     checkAdmin();
   }, [router]);
+
+  if (debugMsg) {
+    return <div className="min-h-[50vh] flex flex-col items-center justify-center text-red-600 p-8 text-center bg-red-50">
+      <h2 className="text-xl font-bold mb-4">অ্যাডমিন অ্যাক্সেস এরর:</h2>
+      <p>{debugMsg}</p>
+    </div>;
+  }
 
   if (loading) {
     return <div className="min-h-[50vh] flex items-center justify-center">লোড হচ্ছে...</div>;
