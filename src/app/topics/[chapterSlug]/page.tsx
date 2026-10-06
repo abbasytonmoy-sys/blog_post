@@ -11,8 +11,11 @@ const mockArticle = {
   `
 };
 
-export default function ChapterPage({ params }: { params: { chapterSlug: string } }) {
-  // In real app, fetch article using params.chapterSlug from Supabase
+export default async function ChapterPage({ params }: { params: Promise<{ chapterSlug: string }> }) {
+  // Await the params in Next.js 15+ 
+  const resolvedParams = await params;
+  
+  // In real app, fetch article using resolvedParams.chapterSlug from Supabase
   const article = mockArticle;
 
   return (
@@ -40,7 +43,7 @@ export default function ChapterPage({ params }: { params: { chapterSlug: string 
           এই অধ্যায়ের উপর আপনার জ্ঞান যাচাই করতে কুইজে অংশগ্রহণ করুন।
         </p>
         <Link 
-          href={`/quizzes/${params.chapterSlug}`}
+          href={`/quizzes/${resolvedParams.chapterSlug}`}
           className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-full font-medium transition shadow-md hover:shadow-lg font-bengali"
         >
           <CheckCircle className="w-5 h-5" />
