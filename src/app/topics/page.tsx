@@ -7,7 +7,7 @@ export default function TopicsPage() {
         </svg>
       </div>
       <h1 className="text-2xl font-bold text-slate-800 mb-2 font-bengali">
-        পড়া শুরু করতে বাম পাশ থেকে একটি অধ্যায় নির্বাচন করুন
+        পড়া শুরু করতে বাম পাশ থেকে একটি বিষয় নির্বাচন করুন
       </h1>
       <p className="text-slate-500 max-w-md mx-auto">
         এখানে প্রতিটি বিষয়ের উপর সাজানো আর্টিকেল পাবেন। পড়া শেষ করে কুইজে অংশ নিয়ে আপনার প্রস্তুতি যাচাই করতে পারবেন।

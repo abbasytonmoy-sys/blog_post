@@ -12,7 +12,7 @@ export default function Navbar() {
           </div>
           <div className="hidden md:flex space-x-8 items-center">
             <Link href="/topics" className="hover:text-emerald-200 transition font-bengali">
-              অধ্যায়সমূহ
+              বিষয় সমূহ
             </Link>
             <Link href="/quizzes" className="hover:text-emerald-200 transition font-bengali">
               কুইজ
