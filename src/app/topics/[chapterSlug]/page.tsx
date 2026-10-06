@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BookOpen, CheckCircle } from "lucide-react";
-import "react-quill/dist/quill.snow.css";
+import "react-quill-new/dist/quill.snow.css";
 
 // Mock data (will be replaced by Supabase fetch later)
 const mockArticle = {
